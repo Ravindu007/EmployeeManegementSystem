@@ -48,8 +48,28 @@ public class EmployeeService {
         //save the data coming form the database
         List<Employee> employeeList = employeeRepo.findAll();
         return modelMapper.map(employeeList, new TypeToken<ArrayList<EmployeeDTO>>(){}.getType());
-
     }
+
+    public EmployeeDTO getEmployeeById(int empID){
+        if(employeeRepo.existsById(empID)){
+            Employee employee = employeeRepo.findById(empID).orElse(null);
+            return modelMapper.map(employee, EmployeeDTO.class);
+        }else{
+            return null;
+        }
+    }
+
+    public String deleteEmployeeByID(int empID){
+
+        if (employeeRepo.existsById(empID)){
+            employeeRepo.deleteById(empID);
+            return VarList.RSP_SUCCESS;
+        }else {
+            return VarList.RSP_NO_DATA_FOUND;
+        }
+    }
+
+
 }
 
 
