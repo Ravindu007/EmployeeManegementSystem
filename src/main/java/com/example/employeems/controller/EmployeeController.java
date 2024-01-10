@@ -124,6 +124,27 @@ public class EmployeeController {
     }
 
 
+    //get a list of employees by their name
+    @GetMapping(value = "/getEmployee/name/{empName}")
+    public ResponseEntity getAllEmployeesByName(@PathVariable String empName){
+        try{
+            List<EmployeeDTO> employeeDTOList = employeeService.getAllEmployeesByName(empName);
+
+            responseDTO.setCode(VarList.RSP_SUCCESS);
+            responseDTO.setMessage("Success");
+            responseDTO.setContent(employeeDTOList);
+            return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+
+        }catch (Exception ex){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(ex.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
     @DeleteMapping("/deleteEmployee/{empID}")
     public ResponseEntity deleteEmployeeByID(@PathVariable int empID){
         try {

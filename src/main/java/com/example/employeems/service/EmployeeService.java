@@ -69,6 +69,12 @@ public class EmployeeService {
         }
     }
 
+    public List<EmployeeDTO> getAllEmployeesByName(String empName){
+        //save the data coming form the database
+        List<Employee> employeeList = employeeRepo.findByEmpName(empName);
+        return modelMapper.map(employeeList, new TypeToken<ArrayList<EmployeeDTO>>(){}.getType());
+    }
+
 
 }
 
